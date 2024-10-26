@@ -1,2 +1,2 @@
 # syedshazli.github.io
-Personal website
+Personal website.. React/TS ONLY
