@@ -1,3 +1,25 @@
+type Site = {
+  website: string;
+  author: string;
+  profile: string;
+  desc: string;
+  title: string;
+  ogImage: string;
+  lightAndDarkMode: boolean;
+  postPerIndex: number;
+  postPerPage: number;
+  scheduledPostMargin: number;
+  showArchives: boolean;
+  editPost: {
+    url: string;
+    text: string;
+    appendFilePath: boolean;
+  };
+  dynamicOgImage: boolean;
+  dir: string;
+  lang: string;
+  timezone: string;
+};
 export const SITE: Site = {
   website: "https://syedshazli.github.io/syedshazlii/", // Change this!
   author: "Syed Shazli", // Your name
