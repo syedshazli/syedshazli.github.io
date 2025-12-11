@@ -10,6 +10,7 @@ type Site = {
   postPerPage: number;
   scheduledPostMargin: number;
   showArchives: boolean;
+  showBackButton: boolean;
   editPost: {
     url: string;
     text: string;
@@ -32,6 +33,7 @@ export const SITE: Site = {
   postPerPage: 10,
   scheduledPostMargin: 15 * 60 * 1000,
   showArchives: true,
+  showBackButton: true,
   editPost: {
     url: "https://github.com/syedshazli/syedshazlii/edit/main/src/content/blog",
     text: "Suggest Changes",
