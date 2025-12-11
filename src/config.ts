@@ -27,7 +27,7 @@ export const SITE: Site = {
   author: "Syed Shazli", // Your name
   profile: "https://syedshazli.github.io/", // Your profile URL
   desc: "Your site description here", // Update this
-  title: "Your Site Title", // Update this
+  title: "Syed Shazli", // Update this
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,
