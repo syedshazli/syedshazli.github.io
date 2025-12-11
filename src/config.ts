@@ -1,20 +1,19 @@
-export const SITE = {
-  website: "https:/syedshazli.github.io/syedshazlii", // replace this with your deployed domain
-  author: "Syed Shazli",
-  profile: "https://satnaing.dev/",
-  desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
-  title: "AstroPaper",
+export const SITE: Site = {
+  website: "https://syedshazli.github.io/syedshazlii/", // Change this!
+  author: "Syed Shazli", // Your name
+  profile: "https://syedshazli.github.io/", // Your profile URL
+  desc: "Your site description here", // Update this
+  title: "Your Site Title", // Update this
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerIndex: 4,
-  postPerPage: 4,
-  scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
+  postPerPage: 10,
+  scheduledPostMargin: 15 * 60 * 1000,
   showArchives: true,
-  showBackButton: true, // show back button in post detail
   editPost: {
-    enabled: true,
-    text: "Edit page",
-    url: "https://github.com/satnaing/astro-paper/edit/main/",
+    url: "https://github.com/syedshazli/syedshazlii/edit/main/src/content/blog",
+    text: "Suggest Changes",
+    appendFilePath: true,
   },
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"
