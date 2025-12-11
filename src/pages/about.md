@@ -2,36 +2,23 @@
 layout: ../layouts/AboutLayout.astro
 title: "About"
 ---
+## Hobbies
+Outside of CS/ECE/Math, I enjoy reading, cooking, playing soccer, exploring nature, traveling, investing, trying out colognes, and playing games with my younger brother. Check out the gallery below
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+## Gallery
+Me meeting David Malan![David Malan](public/Malan.png)
 
-![Astro Paper](public/astropaper-og.jpg)
+Me frolciking through some nature in Nova Scotia ![Nova](public/Nature2.png)
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+Me at the New York Stock Exchange. I used to be President of the WPI Investing Association. ![WPIIA](public/StockExchange.png)
+## Current
+I'm currently on the 3rd book of the "Before the Coffee Gets Cold" series by Toshikazu Kawaguchi, called "Before Your Memory Fades."
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+I'm also watching "Better Call Saul", "Beyblade Metal Masters", and playing "Overcooked: All You Can Eat" with my siblings.
 
-## Features
+I also just got leather gloves (they don't fit very well, but they look nice) and want to get a trenchcoat!
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+My current colognes are Stronger With You: Intensly, Dolce & Gabbana Light Blue, & Calvin Klein Eternity.
+#### Thanks
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
-
-and so much more.
-
-## Show your support
-
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
-
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+This blog template was made by satnaing, [check it out](https://github.com/satnaing/astro-paper) if you're looking for a blog template.
