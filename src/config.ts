@@ -23,9 +23,9 @@ type Site = {
   timezone: string;
 };
 export const SITE: Site = {
-  website: "https://syedshazli.github.io/syedshazlii/", // Change this!
+  website: "https://syedshazli.github.io/", // Change this!
   author: "Syed Shazli", // Your name
-  profile: "https://syedshazli.github.io/", // Your profile URL
+  profile: "https://syedshazli.github.io", // Your profile URL
   desc: "Your site description here", // Update this
   title: "Syed Shazli", // Update this
   ogImage: "astropaper-og.jpg",
