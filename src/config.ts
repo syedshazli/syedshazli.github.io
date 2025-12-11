@@ -15,6 +15,7 @@ type Site = {
     url: string;
     text: string;
     appendFilePath: boolean;
+    enabled: boolean;
   };
   dynamicOgImage: boolean;
   dir: string;
@@ -38,6 +39,7 @@ export const SITE: Site = {
     url: "https://github.com/syedshazli/syedshazlii/edit/main/src/content/blog",
     text: "Suggest Changes",
     appendFilePath: true,
+    enabled: true,
   },
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"
