@@ -2,7 +2,7 @@
 title: Welcome to my Blog!
 author: Syed Shazli
 pubDatetime: 2025-12-10T05:17:19Z
-slug: the-title-of-the-post
+slug: welcome
 featured: true
 draft: false
 tags:

@@ -8,7 +8,7 @@ Outside of CS/ECE/Math, I enjoy reading, cooking, playing soccer, exploring natu
 ## Gallery
 Me meeting David Malan![David Malan](public/Malan.png)
 
-Me frolciking through some nature in Nova Scotia ![Nova](public/Nature2.png)
+Me wandering through some nature in Nova Scotia ![Nova](public/Nature2.png)
 
 Me at the New York Stock Exchange. I used to be President of the WPI Investing Association. ![WPIIA](public/StockExchange.png)
 ## Current
