@@ -89,6 +89,7 @@ Now, let's try to compile and run our program.
 ```bash
 # -I. tells the compiler to find the header file in the current dir at compile time. 
 # -L. tells the compiler to find the shared object in the current dir at link time.
+# -lmath tells the compiler to link against the library we just created (libmath).
 $ gcc main.c -o exe -I. -L. -lmath
 $ ./exe
 
