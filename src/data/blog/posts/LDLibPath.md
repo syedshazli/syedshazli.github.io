@@ -1,5 +1,5 @@
 ---
-title: Exploring LD_LIBRARY_PATH
+title: LD_LIBRARY_PATH From First Principles
 author: Syed Shazli
 pubDatetime: 2025-12-15T07:17:19Z
 slug: LDLibPath
