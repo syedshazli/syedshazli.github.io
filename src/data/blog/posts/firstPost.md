@@ -7,7 +7,6 @@ featured: true
 draft: false
 tags:
   - personal
-
 description: This is my first blog post!
 ---
 
