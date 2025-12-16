@@ -33,10 +33,10 @@ In Linux, shared libraries are seen as .so (shared object) files. In Windows, th
 Static libraries also exist, and are oftentimes uses by programmers. However, the entire content of the library ends up becoming embedded within the executable, mkaing the executable size much larger.
 
 ### Example
-Let's start off with making our own shared library with the calculator example from before. Our library will consist of one file, math.c.
-```c
-// Math.c
-#include "Math.h"
+Let's start off with making our own shared library with the calculator example from before. Our library will consist of two files, math.c, and its corresponding header file, math.h.
+```c file=src/math.c
+
+#include "math.h"
 
 int add(int a, int b){
     return a + b;
@@ -46,17 +46,31 @@ float mult(int a, int b){
 }
 ```
 
-```c
-// Math.h
-#ifndef MYMATH_H
-#define MYMATH_H
+```c file=src/math.h
+
+#ifndef MATH_H
+#define MATH_H
 
 int add(int a, int b);
 float mult(int a, int b);
 #endif
 ```
 
+As you can see, our math library simply provides the functionality to add or multiply two different numbers. Now, let's create a library so we can use the functions provided in math.C.
 
+```bash
+gcc -fPIC -c math.c -o math.o
+gcc -shared -o libmath.so math.o
+```
+We use the -fPIC flag to tell the compiler that the generated machine code doesn't depend on any specific memory addresses. The -o flag creates an object file to then be used by the shared library.
+
+To then create the shared library, we add the -shared flag, specifying what we wish to name the shared library, and what object files it will contain. In this case, we'll name our library libmath.so.
+
+To confirm the shared library was created properly:
+```bash
+$ ls -lh libmath.so
+> -rwxrwxrwx 1 root root 15K Dec 15 19:24 libmath.so
+```
 
 ## Thanks 
 
