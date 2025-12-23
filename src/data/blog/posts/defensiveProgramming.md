@@ -1,5 +1,5 @@
 ---
-title: The Importance of Defensive Programming
+title: Treat All Warnings as Errors
 author: Syed Shazli
 pubDatetime: 2025-12-16T03:07:18Z
 slug: defensive
@@ -8,9 +8,9 @@ draft: false
 tags:
   - C
   - C++
-  - Defensive Programming
+  - Compilers
 
-description: The importance of defensive programming through a quick example.
+description: The importance of being thorough in software development.
 ---
 
 # Intro
@@ -43,13 +43,13 @@ TypeError: cannot unpack non-iterable int object
 Given that I was working in C, an error was not thrown to me, and I was confused as to why I was getting wacky outputs. In reality, what was happening was that 'b' was initialized to a value of 6, while 'a' was left uninitialized.
 
 This mean when we went into the 'add' function, we were trying to add a integer of the value 6 with an integer that held no value! I spent at least 15 minutes tracking this bug down, as I was very confused.
-## The Benefit of Defensive Programming
+## The Benefit of Being Thorough
 
-If only there was an easier way for errors like this to be seen by me! And the truth is, there is! This is the premise of what some call 'defensive programming.' The idea is to validate inputs and outputs and do rigorous checking before and after doing important work with your data.
+If only there was an easier way for errors like this to be seen by me! And the truth is, there is! This is the premise of what some call 'treat all warnings as errors.' The idea is to allow your compiler to be as thorough as possible in checking your code, throwing any warnings out there for you to see. It is the programmers choice to ignore these warnings, but for the most part, it is usually a good idea to address them. Additionally, when writing code yourself, it's equally as important to sanitize your inputs and outputs to some degree, as explained in the next section.
 
-Defensive programming will allow you to clearly view errors in your code that otherwise wouldn't have been thrown by the compiler, and can save you loads of time. For example, it is (mostly) common practice to not check if the return type of 'malloc' returned a nullptr. But if 'malloc' really did return a null pointer for whatever reason, you would be left scratching your head for some time!
+Being thorough will allow you to clearly view errors in your code that otherwise wouldn't have been thrown by the compiler, and can save you loads of time. For example, it is (mostly) common practice to not check if the return type of 'malloc' returned a nullptr. But if 'malloc' really did return a null pointer for whatever reason, you would be left scratching your head for some time!
 
-Of course, defensive programming is more than just rigorous checking in the code itself. You can also implement workflows such as 'treat all warnings as errors' or enabling warnings to show up in compilation. 
+Of course, being thorough is more than just rigorous checking in the code itself. You can also implement workflows such as 'treat all warnings as errors' or enabling warnings to show up in compilation.
 
 In my case, I compiled as 
 ```bash
@@ -67,7 +67,6 @@ gcc main.c -o exe -L. -Wall -lmath
 
 Bug found!
 
-
 ## Conclusion
 
-In this post, I wrote about a silly bug I wrote in my code, and how defensive programming could have made the bug a lot easier to fix! I hope you learned something about defensive programming. I sure did, and will work to compile my C/C++ code with -Wall in the future, treating all warnings as errors!
+In this post, I wrote about a silly bug I wrote in my code, and how being thorough could have made the bug a lot easier to fix! I hope you learned something. I sure did, and will work to compile my C/C++ code with -Wall in the future, treating all warnings as errors!
