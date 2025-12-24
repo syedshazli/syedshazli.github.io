@@ -14,3 +14,7 @@ tags:
 
 description: A working document of getting convolution in CUDA to work for cuDNN performance.
 ---
+
+## Intro
+
+I was inspired by [this post](https://siboehm.com/articles/22/CUDA-MMM) by Simon Boehm on implementing Matrix Multiplication in CUDA from first principles, eventually optimizing enough to get CuBLAS performance.
