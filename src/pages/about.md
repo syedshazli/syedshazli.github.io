@@ -14,7 +14,7 @@ Me at the New York Stock Exchange. I used to be President of the WPI Investing A
 ## Current
 I'm currently on the 3rd book of the "Before the Coffee Gets Cold" series by Toshikazu Kawaguchi, called "Before Your Memory Fades."
 
-I'm also watching "Better Call Saul", "Beyblade Metal Masters", and playing "Overcooked: All You Can Eat" with my siblings.
+I'm also watching "Better Call Saul" and playing "Overcooked: All You Can Eat" with my siblings.
 
 I also just got leather gloves (they don't fit very well, but they look nice) and want to get a trenchcoat!
 
