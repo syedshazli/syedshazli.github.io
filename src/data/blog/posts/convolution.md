@@ -17,4 +17,4 @@ description: A working document of getting convolution in CUDA to work for cuDNN
 
 ## Intro
 
-I was inspired by [this post](https://siboehm.com/articles/22/CUDA-MMM) by Simon Boehm on implementing Matrix Multiplication in CUDA from first principles, eventually optimizing enough to get CuBLAS performance.
+In this post, I'll show a working log of how convolution would work in CUDA, from first principles. I was initially motivated to do so after checking out nn.Conv2D module in PyTorch. For most ML programmers, the details of how this is implemented is meant to be abstracted away, but in this post, we try and bring it to light! 

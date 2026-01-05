@@ -3,7 +3,7 @@ title: Welcome to my Blog!
 author: Syed Shazli
 pubDatetime: 2025-12-10T05:17:19Z
 slug: welcome
-featured: true
+featured: false
 draft: false
 tags:
   - personal
