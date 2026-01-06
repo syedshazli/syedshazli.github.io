@@ -56,12 +56,12 @@ There is an inherent form of parallelism that can be exploited by convolution. E
 
 Now, let's get into how this can be done in CUDA.
 ## Naive CUDA Implementation
-![threadmapping](@assets/images/threadmapping.png)
-The CUDA thread model is shown in Figure 3.
+![threadmapping](@/assets/images/threadmapping.png)
+The CUDA thread model is shown in Figure 3. Code that is to be run on the GPU is a function, also known as a 'kernel.' The kernel launches a 'grid' which has a x,y,z dimension of blocks. Each block can contain threads in the x,y, and z direction.
 
 ### Vector Addition
 I'll first show what a vector addition looks like in CUDA, so you get used to the syntax.
-```Cuda
+```c
 __global__ void add_vectors(double *a, double *b, double *c, int n) {
 int tid = blockIdx.x * blockDim.x + threadIdx.x;
 if (tid < n) {
@@ -71,9 +71,38 @@ c[tid] = a[tid] + b[tid];
 ```
 As you can see, each thread has its own unique ID. The ID is a culmination of the current thread in the block, the current block in the grid, and the grid dimension, all in the X direction. The __global__ keyword signifies that this function can be run on the GPU and can be called from CPU code. All threads run this same block of code. One array simply stores the addition of elements from two different arrays.
 ### Convolution
-Now, it's time to do convolution.
+Now that you know how CUDA works, it's time to do convolution. This is a step up from normal kernels, as we have to account for threads in the Y direction, since we're working with matrices.
+
+```c file=src/convolution.cu
+ __global__ void convolution(int *image, int *filter, int *output,
+                               int imageWidth, int filterWidth, int filterHeight, int outputWidth)
+{
+    int outputCol = blockIdx.x * blockDim.x + threadIdx.x;
+    int outputRow = blockIdx.y * blockDim.y + threadIdx.y;
+
+    int sum = 0;
+
+    for (int filterRow = 0; filterRow < filterHeight; filterRow++)
+    {
+        for(int filterCol = 0; filterCol < filterWidth; filterCol++)
+        {
+                int imageRow = outputRow + filterRow;
+                int imageCol = outputCol + filterCol;
+
+                sum += image[imageRow * imageWidth + imageCol] * filter[filterRow * filterWidth + filterCol];
+        }
+    }
+
+    output[outputRow * outputWidth + outputCol] = sum;
+}
+
+```
 ### Performance
 I don't have access to an NVIDIA GPU physically, so I access a NVIDIA GPU by using a remote cluster. In this cluster, I use an A30 GPU and a Intel Xeon Gold 6342 CPU. Needless to say, this is considerably powerful, so results will be much faster than what you may find on your own desktop GPU or laptop.
+
+For a 4000x4000 image, a C++ CPU only implementation runs for about 1.5 seconds. Using our CUDA code, the implementation runs for about 0.5 seconds. Nice! A 3x speedup.
+
+Disclaimer: I used the 'time' command in Linux to test CPU vs GPU performance. However, there are robust ways of measuring CPU vs. GPU performance not mentioned, as the 'time' command still gives the reader a rough idea of the performance gains you see with a GPU vs. a CPU.
 
 ## Work in Progress: Optimization
 I plan on implementing some optimizations to make this run even faster. I'll first try a shared memory approach before moving on to Im2Col.
