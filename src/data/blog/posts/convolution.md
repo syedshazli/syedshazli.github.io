@@ -41,10 +41,20 @@ CPUs can do convolution on small images, such as the one shown above, and provid
 
 The problem is that CPUs are limited by the amount of threads that can be launched to complete a specific task, reaching a couple hundred threads executing concurrently for top of the line server CPUs. The reason for this is because CPUs are not designed to be parallelism machines. Rather, the CPU is optimized to power through any operation as fast as possible. 
 
-Simply put, the amount of threads that need to be launched for a convolution problem is too much for a CPU to handle. Given that multiple convolution passes happens in typical models, this makes for slow performance.
+Simply put, the amount of threads that need to be launched for a convolution problem is too much for a CPU to handle. Given that multiple convolution passes happens in typical models, this makes for slow performance. Meanwhile, a GPU is designed to solve problems just like this!
 
-## Where GPUs Come In (And GPU Architecture)
+## The Power of the GPU
+![GPUvsCPU](@/assets/images/cpu-vs-gpu.png)
+Figure 2: A simplified diagram displaying CPU vs. GPU architecture. [(Source)](https://tecadmin.net/cpu-vs-gpu-key-differences/)
+
+Graphics Processing Units (GPUs) attempt to curb this problem in a unique way. A GPU is designed to have many more cores than a CPU, enabling a substantial amount of threads to be concurrently running. The tradeoff is that the many cores in a GPU are considerably weaker than that of the CPU. 
+
+GPU vendors such as NVIDIA & AMD release programming models to allow customers to write code to run on the GPU. This leads to much faster training and inference times on Deep Learning and Machine Learning models. We will be using NVIDIA's GPU programming model, known as CUDA, to write code to run on the GPU.
+
+## How the GPU Helps Convolution
 There is an inherent form of parallelism that can be exploited by convolution. Each element in the output does not depend on any previous or future elements.
+
+
 ## Naive CUDA Implementation
 
 ## Work in Progress: Optimization
