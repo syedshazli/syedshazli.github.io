@@ -52,12 +52,30 @@ Graphics Processing Units (GPUs) attempt to curb this problem in a unique way. A
 GPU vendors such as NVIDIA & AMD release programming models to allow customers to write code to run on the GPU. This leads to much faster training and inference times on Deep Learning and Machine Learning models. We will be using NVIDIA's GPU programming model, known as CUDA, to write code to run on the GPU.
 
 ## How the GPU Helps Convolution
-There is an inherent form of parallelism that can be exploited by convolution. Each element in the output does not depend on any previous or future elements.
+There is an inherent form of parallelism that can be exploited by convolution. Each element in the resulting output does not depend on any previous or future elements. So instead of computing each element of the output sequentially, we'll do it at the same time!
 
-
+Now, let's get into how this can be done in CUDA.
 ## Naive CUDA Implementation
+![threadmapping](@assets/images/threadmapping.png)
+The CUDA thread model is shown in Figure 3.
+
+### Vector Addition
+I'll first show what a vector addition looks like in CUDA, so you get used to the syntax.
+```Cuda
+__global__ void add_vectors(double *a, double *b, double *c, int n) {
+int tid = blockIdx.x * blockDim.x + threadIdx.x;
+if (tid < n) {
+c[tid] = a[tid] + b[tid];
+}
+}
+```
+As you can see, each thread has its own unique ID. The ID is a culmination of the current thread in the block, the current block in the grid, and the grid dimension, all in the X direction. The __global__ keyword signifies that this function can be run on the GPU and can be called from CPU code. All threads run this same block of code. One array simply stores the addition of elements from two different arrays.
+### Convolution
+Now, it's time to do convolution.
+### Performance
+I don't have access to an NVIDIA GPU physically, so I access a NVIDIA GPU by using a remote cluster. In this cluster, I use an A30 GPU and a Intel Xeon Gold 6342 CPU. Needless to say, this is considerably powerful, so results will be much faster than what you may find on your own desktop GPU or laptop.
 
 ## Work in Progress: Optimization
-
+I plan on implementing some optimizations to make this run even faster. I'll first try a shared memory approach before moving on to Im2Col.
 ## Conclusion
 In this post, we learned about convolution, the algorithm behind convolutional neural networks (CNNs). We learned why convolution is better suited to run on a GPU, and how to write CUDA code in order to take advantage of the paralellism provided by a GPU to do convolution. Check out the source code [on Github](https://github.com/syedshazli/cudaConvolution) to see the full CUDA kernels as well as my tests.
