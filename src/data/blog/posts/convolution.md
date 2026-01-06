@@ -16,7 +16,7 @@ tags:
 description: A working document of getting convolution in CUDA to work for cuDNN performance.
 ---
 
-# [Source Code on Github](github.com/syedshazli/cudaConvolution)
+# [Source Code on Github](https://github.com/syedshazli/cuda-convolution-from-first-principles)
 ## Intro
 
 In this post, I'll show a working log of how convolution would work in CUDA, from first principles. I was initially motivated to do so after checking out nn.Conv2D module in PyTorch. For most ML programmers, the details of how this is implemented is meant to be abstracted away, but in this post, we try and bring it to light! To do so, we'll introduce GPU programming, specifically CUDA, and how it's useful for breaking down large 4000x4000 or more images!
@@ -37,7 +37,7 @@ As you can see, there exists an input matrix, a constant filter that multiplies 
 
 
 ## Why do CPUs Struggle With Convolution?
-CPUs can do convolution on small images, such as the one shown above, and provide great performance. However, once image dimensions start to increase, the CPU starts to have some trouble. For a 500 x 500 image, the CPU would need to process 250,000 elements sequentially!
+CPUs can do convolution on small images, such as the one shown above, and provide great performance. However, once image dimensions start to increase, the CPU starts to have some trouble. For a 500 x 500 image, the CPU would need to process 250,000 elements sequentially! Not to mention for a colored image, the RGB channels would require doing all steps 2 more times, yikes!
 
 The problem is that CPUs are limited by the amount of threads that can be launched to complete a specific task, reaching a couple hundred threads executing concurrently for top of the line server CPUs. The reason for this is because CPUs are not designed to be parallelism machines. Rather, the CPU is optimized to power through any operation as fast as possible. 
 
@@ -107,4 +107,4 @@ Disclaimer: I used the 'time' command in Linux to test CPU vs GPU performance. H
 ## Work in Progress: Optimization
 I plan on implementing some optimizations to make this run even faster. I'll first try a shared memory approach before moving on to Im2Col.
 ## Conclusion
-In this post, we learned about convolution, the algorithm behind convolutional neural networks (CNNs). We learned why convolution is better suited to run on a GPU, and how to write CUDA code in order to take advantage of the paralellism provided by a GPU to do convolution. Check out the source code [on Github](https://github.com/syedshazli/cudaConvolution) to see the full CUDA kernels as well as my tests.
+In this post, we learned about convolution, the algorithm behind convolutional neural networks (CNNs). We learned why convolution is better suited to run on a GPU, and how to write CUDA code in order to take advantage of the paralellism provided by a GPU to do convolution. Check out the source code [on Github](https://github.com/syedshazli/cuda-convolution-from-first-principles) to see the full CUDA kernels as well as my tests.
