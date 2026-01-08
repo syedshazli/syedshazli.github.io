@@ -73,6 +73,39 @@ As you can see, each thread has its own unique ID. The ID is a culmination of th
 ### Convolution
 Now that you know how CUDA works, it's time to do convolution. This is a step up from normal kernels, as we have to account for threads in the Y direction, since we're working with matrices.
 
+Let's start with the function parameters. We're still going to need 3 matrices: the input image, the filter, and the resulting output. We'll also take in the image width, filter width, filter height, and output width as additional parameters, which will be handy in calculations.
+
+As a result, the function definition will look like so:
+```c
+__global__ void convolution(int *image, int *filter, int *output,
+                               int imageWidth, int filterWidth, int filterHeight, int outputWidth)
+```
+Next, it's important to emphasize what each CUDA thread will be computing. As a reminder, each thread is supposed to compute 1 element of the output.
+
+As a result, each time a thread launches the convolution function, we'll need to calculate the unique thread ID. We'll label this as the output column and the output row. Both will be a culmination of the thread ID in the X and Y direction respectively.
+
+```c
+int outputCol = blockIdx.x * blockDim.x + threadIdx.x;
+int outputRow = blockIdx.y * blockDim.y + threadIdx.y;
+```
+In convolution, in order to compute one element of the output, we must sum up the products of the filter and a specific part of the image. As a result, each thread will have a running sum that will then be placed in the output.
+
+Now, we go deeper into what each thread should really be doing. Let's look at the convolution gif one more time.
+
+![Convolution schematic](@/assets/images/convolution_schematic.gif) 
+
+Each element of the output is just looping over the filter, multiplying the corresponding filter index by the current image index. As a result, each thread will also need to loop through the filter width and height.
+```c
+int sum = 0;
+
+    for (int filterRow = 0; filterRow < filterHeight; filterRow++)
+    {
+        for(int filterCol = 0; filterCol < filterWidth; filterCol++)
+        {
+            ...
+        }
+    }
+```
 ```c file=src/convolution.cu
  __global__ void convolution(int *image, int *filter, int *output,
                                int imageWidth, int filterWidth, int filterHeight, int outputWidth)
@@ -102,7 +135,7 @@ I don't have access to an NVIDIA GPU physically, so I access a NVIDIA GPU by usi
 
 For a 4000x4000 image, a C++ CPU only implementation runs for about 1.5 seconds. Using our CUDA code, the implementation runs for about 0.5 seconds. Nice! A 3x speedup.
 
-Disclaimer: I used the 'time' command in Linux to test CPU vs GPU performance. However, there are robust ways of measuring CPU vs. GPU performance not mentioned, as the 'time' command still gives the reader a rough idea of the performance gains you see with a GPU vs. a CPU.
+Disclaimer: I used the 'time' command in Linux to test CPU vs GPU performance. However, there are robust ways of measuring CPU vs. GPU performance not mentioned. The 'time' command still gives the reader a rough idea of the performance gains you see with a GPU vs. a CPU.
 
 ## Work in Progress: Optimization
 I plan on implementing some optimizations to make this run even faster. I'll first try a shared memory approach before moving on to Im2Col.
