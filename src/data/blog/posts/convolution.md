@@ -106,6 +106,13 @@ int sum = 0;
         }
     }
 ```
+Inside the double for loop, we need to find a way to know what corresponding element of the image we are supposed to multiply by. We don't want threads that are meant to convolve the left side of the image accessing the right side!
+
+As a result, we'll derive a way to calculate the row and column of the image we're on, which will enable us to index into the element meant to be processed.
+
+
+
+And the full CUDA kernel altogether looks like this:
 ```c file=src/convolution.cu
  __global__ void convolution(int *image, int *filter, int *output,
                                int imageWidth, int filterWidth, int filterHeight, int outputWidth)
