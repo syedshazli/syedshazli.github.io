@@ -57,6 +57,9 @@ There is an inherent form of parallelism that can be exploited by convolution. E
 Now, let's get into how this can be done in CUDA.
 ## Naive CUDA Implementation
 ![threadmapping](@/assets/images/threadmapping.png)
+Figure 3: The CUDA thread model. Source: NVIDIA
+
+
 The CUDA thread model is shown in Figure 3. Code that is to be run on the GPU is a function, also known as a 'kernel.' The kernel launches a 'grid' which has a x,y,z dimension of blocks. Each block can contain threads in the x,y, and z direction.
 
 ### Vector Addition
@@ -113,29 +116,81 @@ As a result, we'll derive a way to calculate the row and column of the image we'
 It might help to draw out an example to see how we can derive the row and column for the image, based on the filter and output position.
 
 ![Convolution indeixng](@/assets/images/syedsColConv.gif) 
+Figure 4: A convolution example I made showing how the columns change as the algorithm traverses through the matrices.
 
-And the full CUDA kernel altogether looks like this:
-```c file=src/convolution.cu
- __global__ void convolution(int *image, int *filter, int *output,
-                               int imageWidth, int filterWidth, int filterHeight, int outputWidth)
-{
-    int outputCol = blockIdx.x * blockDim.x + threadIdx.x;
-    int outputRow = blockIdx.y * blockDim.y + threadIdx.y;
+Looking at figure 4, if we're trying to derive the input image's column from the filter and output, we can see the input image's column is simply the sum of the filter's column and the output's column!
 
-    int sum = 0;
+The same goes for the row calculation for the input image. The current row of the input is based on the current filter row and current output row.
 
-    for (int filterRow = 0; filterRow < filterHeight; filterRow++)
+We can now add to our loop that iterates over the filter:
+```c
+for (int filterRow = 0; filterRow < filterHeight; filterRow++)
     {
         for(int filterCol = 0; filterCol < filterWidth; filterCol++)
         {
                 int imageRow = outputRow + filterRow;
                 int imageCol = outputCol + filterCol;
 
-                sum += image[imageRow * imageWidth + imageCol] * filter[filterRow * filterWidth + filterCol];
+                ...
         }
     }
+```
+Now, we get to the core operation of convolution: taking an element of the input image, and multiplying that element by an element of the filter. 
 
+We'll be accessing elements in a flattened 1D manner, even if all our inputs and outputs are 2D matrices. The equation to get a 1D index from a 2D matrix is:
+```c
+index = currentRow * total_columns + currentColumn
+``` 
+The good news is, we calculated the current row of our image, we passed in the total number of columns for the image, and we already calculated the current column of our image. The same goes for our filter. The 'filterRow' and 'filterCol,' are our loop control variables. Additionally, the total number of columns in our filter is already passed in as an argument to the function.
+
+All we have to do is multiply the two numbers based on the index and add it to our running sum, which will look like this.
+
+```c
+for (int filterRow = 0; filterRow < filterHeight; filterRow++)
+    {
+        for(int filterCol = 0; filterCol < filterWidth; filterCol++)
+        {
+                int imageRow = outputRow + filterRow;
+                int imageCol = outputCol + filterCol;
+
+                sum += image[imageRow*imageWidth + imageCol] * filter[filterRow*filterWidth + filterCol];
+        }
+    }
+```
+The last thing each thread needs to do once it's computed it's output element is to store the running sum in the output index. Using our 1D access equation from before, and our unique outputCol and outputRow, this becomes a simple 1-liner.
+```c
     output[outputRow * outputWidth + outputCol] = sum;
+
+```
+
+There you have it! We just completed convolution in CUDA, one of the core operations behind deep learning!
+The full CUDA kernel altogether looks like this. 
+
+
+Note that in this kernel, I added outputLength as a parameter and an extra if condition. This is because we often launch more threads than needed in CUDA, in order to make sure our launches are a multiple of 32. This means threads that will be out of bounds should not be computing anything, and just skip the kernel.
+```c file=src/convolution.cu
+__global__ void convolution(int *image, int *filter, int *output,
+                            int imageWidth, int filterWidth, int filterHeight, int outputWidth, int outputLength)
+{
+    int outputCol = blockIdx.x * blockDim.x + threadIdx.x;
+    int outputRow = blockIdx.y * blockDim.y + threadIdx.y;
+
+    int sum = 0;
+    if (outputCol < outputWidth && outputRow < outputLength)
+    {
+        for (int filterRow = 0; filterRow < filterHeight; filterRow++)
+        {
+            for (int filterCol = 0; filterCol < filterWidth; filterCol++)
+            {
+                int imageRow = outputRow + filterRow;
+                int imageCol = outputCol + filterCol;
+
+                sum += image[imageRow * imageWidth + imageCol] * filter[filterRow * filterWidth + filterCol];
+            }
+        }
+
+        output[outputRow * outputWidth + outputCol] = sum;
+    }
 }
 
 ```
@@ -147,6 +202,6 @@ For a 4000x4000 image, a C++ CPU only implementation runs for about 1.5 seconds.
 Disclaimer: I used the 'time' command in Linux to test CPU vs GPU performance. However, there are robust ways of measuring CPU vs. GPU performance not mentioned. The 'time' command still gives the reader a rough idea of the performance gains you see with a GPU vs. a CPU.
 
 ## Work in Progress: Optimization
-I plan on implementing some optimizations to make this run even faster. I'll first try a shared memory approach before moving on to Im2Col.
+I plan on implementing some optimizations to make this run even faster. I'll first try a shared memory/tiling approach before moving on to Im2Col.
 ## Conclusion
 In this post, we learned about convolution, the algorithm behind convolutional neural networks (CNNs). We learned why convolution is better suited to run on a GPU, and how to write CUDA code in order to take advantage of the paralellism provided by a GPU to do convolution. Check out the source code [on Github](https://github.com/syedshazli/cuda-convolution-from-first-principles) to see the full CUDA kernels as well as my tests.
