@@ -110,7 +110,9 @@ Inside the double for loop, we need to find a way to know what corresponding ele
 
 As a result, we'll derive a way to calculate the row and column of the image we're on, which will enable us to index into the element meant to be processed.
 
+It might help to draw out an example to see how we can derive the row and column for the image, based on the filter and output position.
 
+![Convolution indeixng](@/assets/images/syedsColConv.gif) 
 
 And the full CUDA kernel altogether looks like this:
 ```c file=src/convolution.cu
