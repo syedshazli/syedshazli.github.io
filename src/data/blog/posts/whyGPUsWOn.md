@@ -12,3 +12,5 @@ tags:
 
 description: We look at why GPUs won through the CPI equation, Amdahls law, and more
 ---
+# Intro
+I described in my last blog post about my hardest term yet. Well, I finished the term off well, and wanted to share some things I learned. I want to show why parallel processors (GPUs, TPUs, etc) won: from a CPI perspective. We'll start from 1st principles
