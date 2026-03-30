@@ -16,7 +16,7 @@ description: An explanation of why higher flops is better in high performance co
 # Abstract
 I'm in my second week of my Numerical Methods for Linear and Nonlinear Systems class at WPI. A recurring theme has been to design algorithms that scale, which is very interesting. One thing we discuss a lot is the amount of floating-point operations (FLOPs) of algorithms incur.
 
-Intuitively, more floating point operations should be a bad thing for your algorithms. It causes more steps in your algorithm, which can not only lead to scaling issues when you have vastly large inputs, but this can accumulate floating-point error as well. So why do performance engineers and ML engineers care so much about the FLOP count?
+Intuitively, more floating point operations should be a bad thing for your algorithms. It causes more steps in your algorithm, which can not only lead to scaling issues when you have vastly large inputs, but this can accumulate floating-point error as well. So why do performance engineers and ML engineers care so much about a high FLOP count, when in Numerical Methods, lower is better?
 
 The reason comes down to how parallelism works. We're running algorithms we create at the speed of light, and it's happening across hundreds of cores.
 
